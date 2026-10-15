@@ -7,6 +7,7 @@ from janome.tokenizer import Tokenizer
 def load_ng_words():
     ng_list = []
     
+    # Automatically scan and combine multilingual lists (en, zh, ko) generated on the yml side
     ng_files = ["ng_words.txt", "ng_words_en.txt", "ng_words_zh.txt", "ng_words_ko.txt"]
     
     for file_name in ng_files:
@@ -17,12 +18,12 @@ def load_ng_words():
                     if word and not word.startswith("#"):
                         ng_list.append(word)
     return list(set(ng_list))
+
 def is_safe(text, ng_words):
     if not text:
         return False
 
     clean_text = re.sub(r'https?://[\w/:%#\$&\?\(\)~\.=\+\-]+', '', text)
-    
     clean_text = re.sub(r'@[\w\.-]+', '', clean_text).lower()
     
     if re.search(r'部$', text) or '部活' in text:
@@ -44,7 +45,6 @@ def is_safe(text, ng_words):
         clean_text = clean_text.replace(leet, normal)
 
     for word in ng_words:
-      
         if word.isdigit() and len(word) >= 2:
             if word in stripped_text:
                 return False
@@ -55,7 +55,6 @@ def is_safe(text, ng_words):
         if word.isalnum() and word.isascii():
             if re.search(r'\b' + re.escape(word) + r'\b', clean_text):
                 return False
-              
         else:
             if word in clean_text:
                 return False
@@ -65,6 +64,13 @@ def is_safe(text, ng_words):
 def tokenize(text):
     t = Tokenizer()
     return " ".join([token.surface for token in t.tokenize(text)])
+
+def format_multilingual_spaces(sentence):
+    """Keep spaces between English words and remove unnecessary spaces between Japanese characters"""
+    if not sentence:
+        return ""
+    clean_space_text = re.sub(r'\s+', ' ', sentence).strip()
+    return re.sub(r'(?<=[ぁ-んァ-ヶー一-龠])\s+(?=[ぁ-んァ-ヶー一-龠a-zA-Z])|(?<=[a-zA-Zぁ-んァ-ヶー一-龠])\s+(?=[ぁ-んァ-ヶー一-龠])', '', clean_space_text)
 
 def repost_hashtag_posts(client, tag_name, ng_words, limit=10):
     my_handle = os.environ.get('BSKY_HANDLE')
@@ -83,11 +89,11 @@ def repost_hashtag_posts(client, tag_name, ng_words, limit=10):
                 continue
 
             if post.uri in already_reposted_uris:
-                print(f"Through because it has already been processed: {post.uri}")
+                print(f"Skipping because it has already been processed: {post.uri}")
                 continue
 
             if post.viewer and getattr(post.viewer, 'like', None):
-                print(f"I've already liked it, so I'll pass it.: {post.uri}")
+                print(f"Skipping because it is already liked: {post.uri}")
                 continue
 
             text = post.record.text
@@ -97,7 +103,7 @@ def repost_hashtag_posts(client, tag_name, ng_words, limit=10):
             try:
                 client.like(post.uri, post.cid)
                 client.repost(post.uri, post.cid)
-                print(f"I reposted and liked#{tag_name}  (@{post.author.handle})！")
+                print(f"Reposted and liked #{tag_name} post (@{post.author.handle})!")
                 already_reposted_uris.add(post.uri)
             except Exception as e:
                 print(f"Repost/Like error: {e}")
@@ -106,7 +112,7 @@ def repost_hashtag_posts(client, tag_name, ng_words, limit=10):
         print(f"Hashtag repost error: {e}")
         
 def reply_to_comments(client, text_model, ng_words):
-    print("Checking comments...")
+    print("Checking notifications for comments...")
     my_handle = os.environ.get('BSKY_HANDLE')
 
     try:
@@ -121,7 +127,7 @@ def reply_to_comments(client, text_model, ng_words):
         for notif in response.notifications:
             if notif.reason == 'reply':
                 if notif.uri in already_replied_uris:
-                    print(f"I'll skip it because I'm already replying: {notif.uri}")
+                    print(f"Skipping because a reply has already been sent for this notification: {notif.uri}")
                     continue
 
                 if notif.author.handle == my_handle:
@@ -136,7 +142,7 @@ def reply_to_comments(client, text_model, ng_words):
                         if parent_post_res.posts:
                             parent_author = parent_post_res.posts[0].author.handle
                             if parent_author != my_handle:
-                                print(f"I'll skip it because it's not a post for bot.(Parent's author: @{parent_author})")
+                                print(f"Skipping because the parent post is not from the bot. (Parent author: @{parent_author})")
                                 continue
                     except Exception as e:
                         print(f"Parent post confirmation error: {e}")
@@ -146,12 +152,13 @@ def reply_to_comments(client, text_model, ng_words):
                 comment_text = getattr(notif.record, 'text', '')
 
                 if not is_safe(comment_text, ng_words):
-                    print(f"I will skip the comment: {comment_text}")
+                    print(f"Skipping comment due to safety check: {comment_text}")
                     continue
 
                 sentence = text_model.make_short_sentence(30, tries=100)
                 if sentence:
-                    reply_text = sentence.replace(" ", "")
+                    # Apply multilingual space formatting to reply text as well
+                    reply_text = format_multilingual_spaces(sentence)
                     parent_ref = {'cid': notif.cid, 'uri': notif.uri}
                     root_ref = notif.record.reply.root if hasattr(notif.record, 'reply') and notif.record.reply else parent_ref
 
@@ -159,7 +166,7 @@ def reply_to_comments(client, text_model, ng_words):
                         text=f"@{author_handle} {reply_text}",
                         reply_to={'root': root_ref, 'parent': parent_ref}
                     )
-                    print(f"I replied to @{author_handle} comment section: {reply_text}")
+                    print(f"Replied to @{author_handle}'s comment: {reply_text}")
                     already_replied_uris.add(notif.uri)
 
         client.app.bsky.notification.update_seen({'seen_at': client.get_current_time_iso()})
@@ -170,18 +177,13 @@ def main():
     client = Client()
     client.login(os.environ['BSKY_HANDLE'], os.environ['BSKY_PASSWORD'])
     ng_words = load_ng_words()
-    print(f"The number of NG words read is 1: {len(ng_words)}")
+    print(f"Loaded {len(ng_words)} NG words.")
 
     repost_hashtag_posts(client, "Your original hashtag", ng_words)
     
-    try:
-        feeds = client.app.bsky.unspecced.get_popular_feed_generators()
-        target_feed = next((f.uri for f in feeds.feeds if "Discover" in f.display_name or "Discovery" in f.display_name), None)
-        if not target_feed:
-            target_feed = 'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot'
-    except Exception as e:
-        print(f"The acquisition error search failed: {e}")
-        return
+    # Target the official Discover feed for all languages securely and explicitly
+    target_feed = 'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot'
+    print(f"Collecting source data from the official multilingual Discover feed ({target_feed})...")
 
     all_raw_posts = []
     cursor = None
@@ -206,14 +208,15 @@ def main():
     for item in all_raw_posts:
         if hasattr(item.post.record, 'text'):
             text = item.post.record.text
+            # Process only posts that pass multilingual NG words, leet-spoofing, and hazard checks
             if is_safe(text, ng_words) and len(text) >= 2:
-                if re.search(r'[ぁ-んァ-ヶー一-龠]', text):
-                    cleaned_texts.append(tokenize(text))
+                # Remove Japanese-only restriction and tokenize all safe multilingual posts
+                cleaned_texts.append(tokenize(text))
 
-    print(f"The number of materials collected is : {len(cleaned_texts)}")
+    print(f"Total collected multilingual source items: {len(cleaned_texts)}")
 
     if len(cleaned_texts) < 2:
-        print("There is a shortage of materials!")
+        print("Not enough source material!")
         return
 
     source_data = "\n".join(cleaned_texts)
@@ -221,18 +224,17 @@ def main():
     
     reply_to_comments(client, text_model, ng_words)
 
+    # Apply multilingual filters to generated sentences for regular posts as well
     for _ in range(10): 
-        
         sentence = text_model.make_short_sentence(40, tries=100)
         if sentence:
-            final_post = sentence.replace(" ", "")
+            # Preserve English spaces while collapsing Japanese spaces
+            final_post = format_multilingual_spaces(sentence)
             
-        
             if is_safe(final_post, ng_words):
                 if "#" not in final_post and "＃" not in final_post:
-                
                     client.send_post(text=final_post)
-                    print(f"The post has been completed!: {final_post}")
+                    print(f"Successfully posted a safe regular post: {final_post}")
                     break
 
 if __name__ == "__main__":
