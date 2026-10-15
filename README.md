@@ -1,70 +1,41 @@
-# Bluesky-bot-code  
+# Bluesky# Bluesky-bot
 
-### It doesn't matter if you make it a template for the Markov chain bot!
+### ⚠️ Note: This Markov chain bot template is strictly for Bluesky! It cannot be used on X (Twitter).
 
-This Markov chain bot template is exclusively for Bluesky! Please note that it cannot be used for X!
+**Prerequisites before using these bot files:**
 
-**What to do before using this bot file!**
+First, retrieve these two keys from Bluesky:
+* **`BSKY_HANDLE`** (Your username)
+* **`BSKY_PASSWORD`** (Your App Password)
 
-From Bluesky
+> **How to get an App Password:**
+> Go to the menu (three lines) → **Settings** → **Privacy and security** → **App passwords**.
 
-**"BSKY_HANDLE" (It's the username!)**
+Make sure to copy and save both keys in a notepad app.
 
-**"BSKY_PASSWORD" (app password!)**
+---
 
-Please take these two keys.
+### Setup Instructions
 
-**You can get the app password from "Settings" → "Privacy and Security" → "App Password" in the three main lines!**
+1. Create a new repository on GitHub.
+   Go to **Settings** → **Secrets and variables** → **Actions**.
+   Add the two secrets you saved earlier:
+   * **`BSKY_HANDLE`**
+   * **`BSKY_PASSWORD`**
+   *(Please make sure the names/keys are typed exactly as shown, without any mistakes!)*
 
-Please copy these two to the memo app, etc.
+2. Download or copy the following files and add them to your newly created GitHub repository:
+   * **`ng_words.txt`**
+   * **`bot.py`**
+   * **`requirements.txt`**
+   *(Make sure the file names match exactly!)*
+   * For **`bot/.github/workflows/mainyml.txt`**, rename it to **`main.yml`** (place it under `.github/workflows/main.yml`).
 
-1. If you create a new repository on Github
+***Feel free to change the hashtags in the hashtag-repost section to whatever you like!***
 
-**"More"**
+---
 
-↓
+### About the files in this repository
 
-**"Settings"**
-
-I'm going to. From there further
-
-**"Settings"**
-
-↓
-
-**"Secrets and variables"**
-
-↓
-
-**"Actions"**
-
-I went to, and I just copyed and pasted there
-
-**"BSKY_HANDLE"**
-
-**"BSKY_PASSWORD"**
-
-Please create. ( Please don't make a mistake in the title or key)
-
-2. Download or copy the following and create a new file in the repository you just created on Github.
-
-**・Ng_words.txt**
-
-**・Bot.py**
-
-**・Requirements.txt**
-
-(Don't make a single word wrong about these!)
-
-Please rewrite only   
-**・bot/.github/workflows/mainyml.txt**   
-as   
-**・bot/.github/workflows/main.yml**
-
-***Please rewrite the hashtag in the hashtag repost part with your favorite hashtag! ***
-
-[About the files in this repository]
-
-・It doesn't matter where the distribution destination is. There is no need for mention.
-
-・You don't have to say anything when you use it yourself. I don't even need a mention. Please use it in accordance with public order and morals.
+* You are free to use these files for personal use without giving credit or mentioning me. Please use them responsibly and lawfully.
+* **Do NOT make `ng_words.txt` public.** Sharing it publicly may put your account at risk of being suspended.
