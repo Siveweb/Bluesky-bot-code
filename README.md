@@ -1,6 +1,8 @@
-# Bluesky-bot-code
+# Bluesky-bot-code  
 
-### This Markov chain bot template is exclusively for Bluesky! Please note that it cannot be used for X!
+### It doesn't matter if you make it a template for the Markov chain bot!
+
+This Markov chain bot template is exclusively for Bluesky! Please note that it cannot be used for X!
 
 **What to do before using this bot file! **
 
@@ -52,17 +54,16 @@ Please create. ( Please don't make a mistake in the title or key)
 
 **・Requirements.txt**
 
-**・Bot/.github/workflows/main.yml**
+(Don't make a single word wrong about these!)
 
-(Of course, please don't make a mistake with a single character!)
+Please rewrite only   
+**・bot/.github/workflows/mainyml.txt**   
+as   
+**・bot/.github/workflows/main.yml**
 
 ***Please rewrite the hashtag in the hashtag repost part with your favorite hashtag! ***
 
 [About the files in this repository]
-
-・Please do not make your own statements.
-
-・When redistributing, please write "The author is [Sive] Lalala".
 
 ・It doesn't matter where the distribution destination is. There is no need for mention.
 
