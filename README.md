@@ -1,4 +1,4 @@
-# Bluesky# Bluesky-bot
+# Bluesky-bot-code
 
 ### ⚠️ Note: This Markov chain bot template is strictly for Bluesky! It cannot be used on X (Twitter).
 
