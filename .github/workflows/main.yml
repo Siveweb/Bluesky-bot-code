@@ -55,7 +55,7 @@ jobs:
                     try:
                         translated_word = translator.translate(line)
                         outfile.write(f"{translated_word.strip().lower()}\n")
-                        time.sleep(0.05) # サーバーエラー防止の短い休憩
+                        time.sleep(0.05) 
                     except:
                         outfile.write(f"{line.lower()}\n")
           print("すべての多言語意訳リストの作成が完了しました！")
