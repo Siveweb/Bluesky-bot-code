@@ -4,17 +4,17 @@
 
 This Markov chain bot template is exclusively for Bluesky! Please note that it cannot be used for X!
 
-**What to do before using this bot file! **
+**What to do before using this bot file!**
 
 From Bluesky
 
-**"BSKY_HANDLE" (It's the username!) **
+**"BSKY_HANDLE" (It's the username!)**
 
-**"BSKY_PASSWORD" (app password!) **
+**"BSKY_PASSWORD" (app password!)**
 
 Please take these two keys.
 
-**You can get the app password from "Settings" → "Privacy and Security" → "App Password" in the three main lines! **
+**You can get the app password from "Settings" → "Privacy and Security" → "App Password" in the three main lines!**
 
 Please copy these two to the memo app, etc.
 
