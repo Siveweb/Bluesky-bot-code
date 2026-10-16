@@ -27,9 +27,10 @@ Make sure to copy and save both keys in a notepad app.
 2. Download or copy the following files and add them to your newly created GitHub repository:
    * **`ng_words.txt`**
    * **`bot.py`**
+   * **`expand_ng.py`**
    * **`requirements.txt`**
    *(Make sure the file names match exactly!)*
-   * For **`bot/.github/workflows/mainyml.txt`**, rename it to **`main.yml`** (place it under `.github/workflows/main.yml`).
+   * For **`bot/.github/workflows/main.yml.txt`**, rename it to **`main.yml`** (place it under `.github/workflows/main.yml`).
 
 ***Feel free to change the hashtags in the hashtag-repost section to whatever you like!***
 
