@@ -6,8 +6,7 @@ from janome.tokenizer import Tokenizer
 
 def load_ng_words():
     ng_list = []
-    
-    # Automatically scan and combine multilingual lists (en, zh, ko) generated on the yml side
+    # Automatically scan and combine multilingual lists generated on the yml side
     ng_files = ["ng_words.txt", "ng_words_en.txt", "ng_words_zh.txt", "ng_words_ko.txt"]
     
     for file_name in ng_files:
@@ -74,7 +73,7 @@ def format_multilingual_spaces(sentence):
 
 def repost_hashtag_posts(client, tag_name, ng_words, limit=10):
     my_handle = os.environ.get('BSKY_HANDLE')
-    print(f"Checking the latest post of #{tag_name}...")
+    print(f"Checking the latest posts for #{tag_name}...")
 
     try:
         already_reposted_uris = set()
@@ -157,7 +156,6 @@ def reply_to_comments(client, text_model, ng_words):
 
                 sentence = text_model.make_short_sentence(30, tries=100)
                 if sentence:
-                    # Apply multilingual space formatting to reply text as well
                     reply_text = format_multilingual_spaces(sentence)
                     parent_ref = {'cid': notif.cid, 'uri': notif.uri}
                     root_ref = notif.record.reply.root if hasattr(notif.record, 'reply') and notif.record.reply else parent_ref
@@ -179,9 +177,9 @@ def main():
     ng_words = load_ng_words()
     print(f"Loaded {len(ng_words)} NG words.")
 
+    # Change the hashtag name below as needed
     repost_hashtag_posts(client, "Your original hashtag", ng_words)
     
-    # Target the official Discover feed for all languages securely and explicitly
     target_feed = 'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot'
     print(f"Collecting source data from the official multilingual Discover feed ({target_feed})...")
 
@@ -208,9 +206,7 @@ def main():
     for item in all_raw_posts:
         if hasattr(item.post.record, 'text'):
             text = item.post.record.text
-            # Process only posts that pass multilingual NG words, leet-spoofing, and hazard checks
             if is_safe(text, ng_words) and len(text) >= 2:
-                # Remove Japanese-only restriction and tokenize all safe multilingual posts
                 cleaned_texts.append(tokenize(text))
 
     print(f"Total collected multilingual source items: {len(cleaned_texts)}")
@@ -224,11 +220,9 @@ def main():
     
     reply_to_comments(client, text_model, ng_words)
 
-    # Apply multilingual filters to generated sentences for regular posts as well
     for _ in range(10): 
         sentence = text_model.make_short_sentence(40, tries=100)
         if sentence:
-            # Preserve English spaces while collapsing Japanese spaces
             final_post = format_multilingual_spaces(sentence)
             
             if is_safe(final_post, ng_words):
