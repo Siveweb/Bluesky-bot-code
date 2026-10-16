@@ -6,7 +6,7 @@ from janome.tokenizer import Tokenizer
 
 def load_ng_words():
     ng_list = []
-    # ファイルは ng_words.txt 1つに絞る！
+    
     file_name = "ng_words.txt⁠"
     
     if os.path.exists(file_name):
@@ -62,7 +62,7 @@ def is_safe(text, ng_words):
     return True
 
 def tokenize(text):
-    # 日本語（ひらがな・カタカナ・漢字）が含まれる場合のみJanomeを使う
+
     if re.search(r'[ぁ-んァ-ヶー一-龠]', text):
         try:
             t = Tokenizer()
@@ -70,7 +70,7 @@ def tokenize(text):
         except Exception:
             return ""
     else:
-        # 英語や他言語はスペースで分割する
+
         words = text.split()
         return " ".join(words)
 
@@ -85,7 +85,7 @@ def main():
     client.login(os.environ['BSKY_HANDLE'], os.environ['BSKY_PASSWORD'])
     ng_words = load_ng_words()
 
-    # Discoverフィードを取得
+    # Get the Discover feed
     target_feed = 'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot'
     
     japanese_posts = []
@@ -93,7 +93,7 @@ def main():
     other_posts = []
     
     cursor = None
-    # 均等に集めるために少し多めに巡回
+
     for _ in range(8):
         try:
             params = {'feed': target_feed, 'limit': 50}
@@ -109,7 +109,7 @@ def main():
                     if is_safe(text, ng_words) and len(text) >= 2:
                         tokenized = tokenize(text)
                         
-                        # 言語ごとに分類して、各上限（例: 15件まで）均等にストックする
+                        # Number of words acquired in English, Japanese, and other languages
                         if re.search(r'[ぁ-んァ-ヶー一-龠]', text):
                             if len(japanese_posts) < 15:
                                 japanese_posts.append(tokenized)
@@ -127,7 +127,6 @@ def main():
             print(f"Error: {e}")
             break
 
-    # 各言語からバランスよく集まった素材を合体する
     cleaned_texts = japanese_posts + english_posts + other_posts
     print(f"Collected - JP: {len(japanese_posts)}, EN: {len(english_posts)}, Others: {len(other_posts)}")
 
@@ -138,7 +137,6 @@ def main():
     source_data = "\n".join(cleaned_texts)
     text_model = markovify.NewlineText(source_data, state_size=1)
 
-    # ポスト生成
     for _ in range(10): 
         sentence = text_model.make_short_sentence(40, tries=100)
         if sentence:
