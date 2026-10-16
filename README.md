@@ -29,8 +29,8 @@ Make sure to copy and save both keys in a notepad app.
    * **`bot.py`**
    * **`expand_ng.py`**
    * **`requirements.txt`**
-   *(Make sure the file names match exactly!)*
-   *Words such as major incidents and accidents have already been written in some languages in ng_wards.txt. If there are other words that are at risk of account freezing in Bluesky's terms of use, please add them each time.*
+   *(Make sure the file names match exactly!)*  
+   *Words such as major incidents and accidents have already been written in some languages in ng_wards.txt. If there are other words that are at risk of account freezing in Bluesky's terms of use, please add them each time.*  
    **In addition, we recommend that words that may freeze accounts correspond not only to the native language, but also to all languages supported by Bluesky.**
      
    * For **`bot/.github/workflows/main.yml.txt`**, rename it to **`main.yml`** (place it under `.github/workflows/main.yml`).
