@@ -75,7 +75,9 @@ In addition, ng_wards.txt supports
 **Frisian**  
 **Aymara**  
 **Asturian**  
-*We plan to adapt it to Bluesky's corresponding language in order.*  
+**Indonesian**  
+**Thai**  
+**Turkish**  
 
 ---
 
