@@ -63,6 +63,7 @@ In addition, ng_wards.txt supports
 **Hungarian**  
 **Cambodian**  
 **Hindi**  
+**Nepali**  
 
 *We plan to adapt it to Bluesky's corresponding language in order.*  
 
