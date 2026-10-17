@@ -139,8 +139,8 @@ def reply_to_comments(client, text_model, ng_words, processed_uris):
         print(f"Reply error: {e}")
 
 def main():
-    BSKY_HANDLE = os.environ.get('BSKY_HANDLE', 'あなたのアカウント名.bsky.social')
-    BSKY_PASSWORD = os.environ.get('BSKY_PASSWORD', 'あなたのアプリパスワード')
+    BSKY_HANDLE = os.environ.get('BSKY_HANDLE')
+    BSKY_PASSWORD = os.environ.get('BSKY_PASSWORD')
 
     client = Client()
     client.login(BSKY_HANDLE, BSKY_PASSWORD)
@@ -148,7 +148,7 @@ def main():
     ng_words = load_ng_words()
     processed_uris = load_processed_uris()
     
-    repost_hashtag_posts(client, "YourHashtag", ng_words, processed_uris)
+    repost_hashtag_posts(client, "Your Hashtag", ng_words, processed_uris)
     
     target_feed = 'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot'
     japanese_posts, english_posts, other_posts = [], [], []
