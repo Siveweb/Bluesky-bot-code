@@ -32,52 +32,52 @@ Make sure to copy and save both keys in a notepad app.
    * **`processed_posts.txt`**  
    *(Make sure the file names match exactly!)*
 
-   *Words such as major incidents and accidents have already been written in some languages in ng_wards.txt. If there are other words that are at risk of account freezing in Bluesky's terms of use, please add them each time.*
+   *Words such as major incidents and accidents have already been written in some languages in `ng_words.txt`. If there are other words that are at risk of account freezing under Bluesky's terms of use, please add them as needed.*
    
-   **In addition, we recommend that words that may freeze accounts correspond not only to the native language, but also to all languages supported by Bluesky.**
+   **In addition, we recommend that words that may risk freezing accounts correspond not only to the native language, but also to all languages supported by Bluesky.**
      
    * For **`bot/.github/workflows/main.yml.txt`**, rename it to **`main.yml`** (place it under `.github/workflows/main.yml`).
 
 ***Feel free to change the hashtags in the hashtag-repost section to whatever you like!***  
 
-In addition, ng_words.txt supports  
-**Japanese**  
-**English**  
-**Chinese (Simplified)**  
-**Chinese (Traditional)**  
-**Korean**  
-**Spanish**  
-**French**  
-**German**  
-**Italian**  
-**Portuguese**  
-**Russian**  
-**Swedish**  
-**Polish**  
-**Romanian**  
-**Dutch**  
-**Finnish**  
-**Greek**  
-**Czech**  
-**Danish**  
-**Hungarian**  
-**Cambodian**  
-**Hindi**  
-**Nepali**  
-**Catalan**  
-**Galician**  
-**Basque**  
-**Irish**  
-**Aragon**  
-**Interling**  
-**Welsh Gael**  
-**Esperanto**  
-**Frisian**  
-**Aymara**  
-**Asturian**  
-**Indonesian**  
-**Thai**  
-**Turkish**  
+In addition, `ng_words.txt` supports the following 38 languages:  
+* Japanese  
+* English  
+* Chinese (Simplified)  
+* Chinese (Traditional)  
+* Korean  
+* Spanish  
+* French  
+* German  
+* Italian  
+* Portuguese  
+* Russian  
+* Swedish  
+* Polish  
+* Romanian  
+* Dutch  
+* Finnish  
+* Greek  
+* Czech  
+* Danish  
+* Hungarian  
+* Cambodian  
+* Hindi  
+* Nepali  
+* Catalan  
+* Galician  
+* Basque  
+* Irish  
+* Aragon  
+* Interlingua  
+* Welsh Gael  
+* Esperanto  
+* Frisian  
+* Aymara  
+* Asturian  
+* Indonesian  
+* Thai  
+* Turkish  
 
 ---
 
