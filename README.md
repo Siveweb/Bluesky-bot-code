@@ -64,7 +64,17 @@ In addition, ng_wards.txt supports
 **Cambodian**  
 **Hindi**  
 **Nepali**  
-
+**Catalan**  
+**Galician**  
+**Basque**  
+**Irish**  
+**Aragon**  
+**Interling**  
+**Welsh Gael**  
+**Esperanto**  
+**Frisian**  
+**Aymara**  
+**Asturian**  
 *We plan to adapt it to Bluesky's corresponding language in order.*  
 
 ---
