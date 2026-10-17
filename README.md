@@ -29,6 +29,7 @@ Make sure to copy and save both keys in a notepad app.
    * **`bot.py`**
    * **`expand_ng.py`**
    * **`requirements.txt`**
+   * **`processed_posts.txt`**
    *(Make sure the file names match exactly!)*
 
    *Words such as major incidents and accidents have already been written in some languages in ng_wards.txt. If there are other words that are at risk of account freezing in Bluesky's terms of use, please add them each time.*
