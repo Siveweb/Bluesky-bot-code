@@ -40,7 +40,7 @@ Make sure to copy and save both keys in a notepad app.
 
 ***Feel free to change the hashtags in the hashtag-repost section to whatever you like!***  
 
-In addition, ng_wards.txt supports  
+In addition, ng_words.txt supports  
 **Japanese**  
 **English**  
 **Chinese (Simplified)**  
